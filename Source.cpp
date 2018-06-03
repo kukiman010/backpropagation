@@ -99,17 +99,35 @@ public:
 		inputs[0] = a;
 		inputs[1] = b;
 		inputs[2] = c;
+		for(int i = 0; i < 2; i++)
+			hidN[i] = 0;
+		output = 0;
 
 		for (int i = 0; i < 2; i++)
-			hidN[i] = sigmoid((inputs[0] * weight_1[0][i]) + (inputs[1] * weight_1[1][i]) + (inputs[2] * weight_1[2][i]));
-		output = sigmoid((hidN[0] * weight_2[0]) + (hidN[1] * weight_2[1]));
+		{
+			for (int j = 0; j < 3; j++)
+				hidN[i] += inputs[j] * weight_1[j][i];
+
+			hidN[i] = sigmoid(hidN[i]);
+		}
+		for (int i = 0; i<2; i++)
+			output += (hidN[i] * weight_2[i]);
+		output = sigmoid(output);
 		return output;
 	}
 	void train(double expected_predict)
 	{
 		for (int i = 0; i < 2; i++)
-			hidN[i] = sigmoid((inputs[0] * weight_1[0][i]) + (inputs[1] * weight_1[1][i]) + (inputs[2] * weight_1[2][i]));
-		output = sigmoid((hidN[0] * weight_2[0]) + (hidN[1] * weight_2[1]));
+		{
+			for (int j = 0; j < 3; j++)
+				hidN[i] += inputs[j] * weight_1[j][i];
+
+			hidN[i] = sigmoid(hidN[i]);
+		}
+		for (int i = 0; i<2; i++)
+			output += (hidN[i] * weight_2[i]);
+		output = sigmoid(output);
+
 		actual_predict = output;
 
 
@@ -118,7 +136,7 @@ public:
 		weights_delta_layer_2 = error_layer_2 * gradient_layer_2;
 		for (int i = 0; i < 2; i++)
 			weight_2[i] = weight_2[i] - hidN[i] * weights_delta_layer_2 * learning_rate;
-      
+
 
 		for (int i = 0; i < 2; i++)
 		{
@@ -158,6 +176,7 @@ int main()
 	t.tt(6000, 0.08);
 
 	t.PRINT_2();
+	//cout << t.sigmoid(5) << endl;
 	_getch();
 	return 0;
 }
