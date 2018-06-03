@@ -8,12 +8,12 @@ using namespace std;
 class Network
 {
 private:
-	int inputs[3];//������� ������
-	double hidN[2];//������� �������� ����
-	double output;//�������� ������
+	int inputs[3];
+	double hidN[2];
+	double output;
 
-	double weight_1[3][2];// ���� ��� �������� ����
-	double weight_2[2];//���� ��� ��������� �������
+	double weight_1[3][2];
+	double weight_2[2];
 
 	double actual_predict;
 
